@@ -32,5 +32,3 @@ $(NAME): $(MODULE_OBJ) $(OBJ) $(C_OBJ)
 clean:
 	rm -f $(NAME) $(OBJ) $(MODULE_OBJ) $(C_OBJ) *.swiftdoc *~
 
-fclean:
-	rm -f mlx_image.swiftsourceinfo mlx_init.swiftsourceinfo mlx_window.swiftsourceinfo
