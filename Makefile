@@ -6,7 +6,7 @@
 #    By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/11 20:03:14 by kfumiya           #+#    #+#              #
-#    Updated: 2021/06/06 06:59:58 by kfumiya          ###   ########.fr        #
+#    Updated: 2022/05/21 11:50:59 by kfumiya          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ MLX_LIB = mlx/libmlx.dylib
 
 all:	$(NAME)
 
-.PHONY:	clean fclean re bonus bench bclean
+.PHONY:	all clean fclean re run
 
 $(NAME):	$(OBJS)
 	@make -C gnl

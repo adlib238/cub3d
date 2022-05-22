@@ -5,66 +5,89 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/01 00:10:00 by kfumiya           #+#    #+#             */
-/*   Updated: 2021/04/13 19:50:29 by kfumiya          ###   ########.fr       */
+/*   Created: 2022/05/22 11:11:09 by kfumiya           #+#    #+#             */
+/*   Updated: 2022/05/22 11:21:26 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-int		ft_strlen(const char *str)
+size_t	ft_strlen(const char	*s)
 {
 	size_t	i;
 
 	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
+	while (s[i] != '\0')
 		i++;
 	return (i);
 }
 
-void	*ft_memmove(void *s1, const void *s2, size_t len)
-{
-	unsigned char	*dst;
-	unsigned char	*src;
-
-	dst = (unsigned char *)s1;
-	src = (unsigned char *)s2;
-	if (!src && !dst)
-		return (NULL);
-	if (src < dst)
-	{
-		while (len--)
-			*(dst + len) = *(src + len);
-	}
-	else
-	{
-		while (len--)
-		{
-			*(dst++) = *(src++);
-		}
-	}
-	return ((void *)dst);
-}
-
-char	*gnl_strjoin(char const *s1, char const *s2)
+char	*ft_join(char const	*s1, char const	*s2)
 {
 	char	*str;
-	size_t	s1_len;
-	size_t	s2_len;
-	size_t	total_len;
+	size_t	total;
+	size_t	i;
+	size_t	j;
 
-	if (!s1 && !s2)
+	i = 0;
+	j = 0;
+	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	total_len = s1_len + s2_len;
-	if (!(str = (char *)malloc(sizeof(*str) * (total_len + 1))))
+	total = ft_strlen(s1) + ft_strlen(s2);
+	str = (char *)malloc(total + 1);
+	if (str == NULL)
 		return (NULL);
-	ft_memmove(str, s1, s1_len);
-	ft_memmove(str + s1_len, s2, s2_len);
-	str[total_len] = '\0';
-	free_null((char *)s1);
+	while (s1[i] != '\0')
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	while (s2[j] != '\0')
+		str[i++] = s2[j++];
+	str[i] = '\0';
 	return (str);
+}
+
+char	*ft_substr(char const	*s, size_t	start, size_t	len)
+{
+	char	*str;
+	size_t	i;
+
+	i = 0;
+	if (s == NULL)
+		return (NULL);
+	str = (char *)malloc(len + 1);
+	if (str == NULL)
+		return (NULL);
+	while (s[i] != '\0' && i < len)
+		str[i++] = s[start++];
+	str[i] = '\0';
+	return (str);
+}
+
+char	*ft_strchr(const char	*s, int	c)
+{
+	char	charr;
+	size_t	i;
+
+	i = 0;
+	charr = (char)c;
+	while (s[i] != '\0')
+	{
+		if (s[i] == charr)
+			return ((char *)&s[i]);
+		i++;
+	}
+	return (NULL);
+}
+
+char	*no_newline(char	**save)
+{
+	char	*line;
+
+	if (**save == '\0')
+		return (NULL);
+	line = ft_substr(*save, 0, ft_strlen(*save));
+	if (line == NULL)
+		return (NULL);
+	return (line);
 }

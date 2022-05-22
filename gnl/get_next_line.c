@@ -5,110 +5,99 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/01 00:10:20 by kfumiya           #+#    #+#             */
-/*   Updated: 2021/01/02 20:32:26 by kfumiya          ###   ########.fr       */
+/*   Created: 2022/05/22 11:10:53 by kfumiya           #+#    #+#             */
+/*   Updated: 2022/05/22 11:21:31 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+static void	brainless_free(char	**str)
+{
+	free(*str);
+	*str = NULL;
+}
 
-int		find_nl(char *save)
+static size_t	check_n(char	*s)
 {
 	size_t	i;
 
 	i = 0;
-	if (!save)
+	if (s == NULL)
 		return (0);
-	while (save[i] != '\0')
-	{
-		if (save[i] == '\n')
-			return (1);
+	while (s[i] != '\0' && s[i] != '\n')
 		i++;
-	}
-	return (0);
+	return (i);
 }
 
-char	*write_line(char *save)
+static char	*get_line(char	*save_chr, char	**save)
 {
-	char	*str;
-	size_t	i;
+	char	*tmp;
+	char	*line;
 
-	i = 0;
-	if (!save)
+	line = ft_substr(*save, 0, check_n(*save) + 1);
+	if (line == NULL)
 		return (NULL);
-	while (save[i] != '\0' && save[i] != '\n')
-		i++;
-	if (!(str = (char *)malloc(sizeof(char) * (i + 1))))
-		return (NULL);
-	i = 0;
-	while (save[i] != '\0' && save[i] != '\n')
+	tmp = ft_substr(*save, check_n(*save) + 1, ft_strlen(save_chr + 1));
+	if (tmp == NULL)
 	{
-		str[i] = save[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
-}
-
-char	*save_line(char *save)
-{
-	char	*str;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	if (!save)
-		return (NULL);
-	while (save[i] != '\0' && save[i] != '\n')
-		i++;
-	if (save[i] == '\0')
-	{
-		free_null(save);
+		brainless_free(&line);
 		return (NULL);
 	}
-	if (!(str = (char *)malloc(sizeof(char) * (ft_strlen(save) - i + 1))))
-		return (NULL);
-	i++;
-	while (save[i] != '\0')
-		str[j++] = save[i++];
-	str[j] = '\0';
-	free_null(save);
-	return (str);
+	brainless_free(save);
+	*save = tmp;
+	return (line);
 }
 
-int		free_null(void *ptr)
+static char	*join_line(int	fd, int	*read_size, char	**save, char	**buf)
 {
-	free(ptr);
-	ptr = NULL;
-	return (0);
-}
+	char	*save_chr;
+	char	*tmp;
 
-int		get_next_line(int fd, char **line)
-{
-	int			r;
-	char		*buf;
-	static char *save[FD_MAX];
-
-	r = 1;
-	if (fd < 0 || !line || BUFFER_SIZE <= 0 || fd > FD_MAX)
-		return (-1);
-	if (!(buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
-		return (-1);
-	while (!(find_nl(save[fd])) && r)
+	while (*read_size > 0)
 	{
-		if ((r = read(fd, buf, BUFFER_SIZE)) == -1)
-			return (free_null(buf) | -1);
-		buf[r] = '\0';
-		if (!(save[fd] = gnl_strjoin(save[fd], buf)))
-			return (free_null(buf) | -1);
+		save_chr = ft_strchr(*save, '\n');
+		if (save_chr != NULL)
+			return (get_line(save_chr, save));
+		else
+		{
+			*read_size = read(fd, *buf, BUFFER_SIZE);
+			if (*read_size == -1)
+				return (NULL);
+			(*buf)[*read_size] = '\0';
+			tmp = ft_join(*save, *buf);
+			if (tmp == NULL)
+				return (NULL);
+			brainless_free(save);
+			*save = tmp;
+		}
 	}
-	free_null(buf);
-	*line = write_line(save[fd]);
-	save[fd] = save_line(save[fd]);
-	if (!r)
-		return (0);
-	if (!(*line) || !(save[fd]))
-		return (-1);
-	return (1);
+	return (no_newline(save));
+}
+
+char	*get_next_line(int	fd)
+{
+	static char	*save[OPEN_MAX];
+	char		*buf;			
+	char		*line;			
+	int			read_size;
+
+	if (fd < 0 || BUFFER_SIZE < 1 || OPEN_MAX < fd)
+		return (NULL);
+	buf = (char *)malloc((size_t)BUFFER_SIZE + 1);
+	if (buf == NULL)
+		return (NULL);
+	if (save[fd] == NULL)
+		save[fd] = ft_substr("", 0, 0);
+	if (save == NULL)
+		return (NULL);
+	read_size = 1;
+	line = join_line(fd, &read_size, &save[fd], &buf);
+	brainless_free(&buf);
+	if (line == NULL || read_size == -1 || read_size == 0)
+	{
+		brainless_free(&save[fd]);
+		if (read_size == -1 || line == NULL)
+			return (NULL);
+	}
+	return (line);
 }

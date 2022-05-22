@@ -6,7 +6,7 @@
 #    By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/12 12:19:43 by kfumiya           #+#    #+#              #
-#    Updated: 2021/04/12 13:25:09 by kfumiya          ###   ########.fr        #
+#    Updated: 2022/05/22 11:18:33 by kfumiya          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,12 @@ FLAG = -Wall -Werror -Wextra
 
 OPTION = -c
 
-INCLUDEH	= -I ../libft
-
+INCLUDE = -I ../libft
 
 all: $(NAME)
 
 .c.o:
-	gcc $(FLAG) $(INCLUDEH) -c $< -o $@
+	gcc $(FLAG) $(INCLUDE) -c $< -o $@
 
 $(NAME): $(OBJ)
 	ar rc $(NAME) $(OBJ)
@@ -39,3 +38,5 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re 
