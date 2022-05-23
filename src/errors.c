@@ -6,25 +6,23 @@
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 19:34:15 by kfumiya           #+#    #+#             */
-/*   Updated: 2021/04/21 17:46:03 by kfumiya          ###   ########.fr       */
+/*   Updated: 2022/05/23 11:14:57 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int
-	out_error(char *message)
+void
+	put_err_msg(char *msg)
 {
-	write(2, message, ft_strlen(message));
-	return (0);
+	write(STDERR_FILENO, "Error: ", ft_strlen("Error: "));
+	write(STDERR_FILENO, msg, ft_strlen(msg));
+	write(STDERR_FILENO, "\n", 1);
 }
 
 int
-	put_error(char *message, t_game *game)
+	return_error_msg(char *msg)
 {
-	int i;
-
-	i = 0;
-	write(2, message, ft_strlen(message));
-	return (exit_game(game, EXIT_SUCCESS));
+	put_err_msg(msg);
+	return (ERROR);
 }
