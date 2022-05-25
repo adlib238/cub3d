@@ -6,7 +6,7 @@
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 18:25:53 by kfumiya           #+#    #+#             */
-/*   Updated: 2022/05/23 15:18:34 by kfumiya          ###   ########.fr       */
+/*   Updated: 2022/05/25 10:52:56 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,14 @@
 # include <math.h>
 # include <stdbool.h>
 # include "../libft/includes/libft.h"
-# include "../mlx/mlx.h"
+// # include "../mlx/mlx.h"
+
 
 # define ERROR				-1
-# define MAX_MAP_WIDTH 200
-# define MAX_MAP_HEIGHT 200
+# define MAX_MAP_W 200
+# define MAX_MAP_H 200
+
+# define MAX(a, b)	((a > b) ? a : b)
 
 /* 
 # define MAX(a, b)			((a > b) ? a : b)
@@ -82,7 +85,7 @@ typedef struct	s_img {
 	int			endian;
 	int			width;
 	int			height;
-}				t_img;
+} t_img;
 
 // Vector2D
 typedef struct	s_vec {
@@ -104,7 +107,7 @@ typedef struct	s_player {
 	int			is_moving; // 動くキーが押されているか (W=1, S=-1, None=0)
 	int			is_sidling;  // 動くキーが押されているか (D=1, A=-1, None=0)
 	int			is_rotating; // 動くキーが押されているか (左矢印=1, 右矢印=-1, None=0)
-}				t_player;
+} t_player;
 
 typedef struct s_game
 {
@@ -130,6 +133,9 @@ typedef struct s_game
 	double		*z_buffer;
 } t_game;
 
+/* degug.c */
+void print_config(t_game *game);
+
 /* errors.c */
 int return_error_msg(char *msg);
 void put_err_msg(char *msg);
@@ -137,6 +143,26 @@ void put_err_msg(char *msg);
 int init_game(t_game *game);
 /* read_cub.c */
 int read_cub(t_game *game, char *path);
+/* set_free.c */
+void set_free(void **dst, void *src);
+void instant_free(void **strs);
+/* utils.c */
+bool str_isvalid_set(char *str, int (*f)(int));
+int strs_size(char **strs);
+/* set_resolution.c */
+int set_resolution(t_game *game, char *w, char *h);
+/* set_color.c */
+int set_color(t_game *game, char c, char *rgb);
+/* read_texture.c */
+int read_texture(t_game *game, char *s, char *path);
+bool is_texture(char *s);
+/* read_map.c */
+int read_map(t_game *game, char *line);
+/* readline.c */
+char *readline(int fd);
+
+/* mlx_utils.c */
+// int read_image(t_game *game, t_img *img, char *filepath);
 
 /* 
 void init_game(t_game *game, int save);

@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/02 14:28:19 by kfumiya           #+#    #+#             */
-/*   Updated: 2022/05/25 09:58:17 by kfumiya          ###   ########.fr       */
+/*   Created: 2022/05/24 14:44:06 by kfumiya           #+#    #+#             */
+/*   Updated: 2022/05/25 10:17:02 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "cub3d.h"
 
-size_t	ft_strlen(const char *s)
+char
+	*readline(int fd)
 {
-	size_t	i;
+	char	*line;
+	size_t	len;
 
-	i = 0;
-	if (!s)
-		return (i);
-	while (s[i] != '\0')
-		i++;
-	return (i);
+	line = NULL;
+	line = get_next_line(fd);
+	if (!line)
+		return (NULL);
+	len = ft_strlen(line);
+	if (line[len - 1] == '\n' && !line[len])
+		ft_strlcpy(line, line, len);
+	return (line);
 }

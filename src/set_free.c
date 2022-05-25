@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   set_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/02 14:28:19 by kfumiya           #+#    #+#             */
-/*   Updated: 2022/05/25 09:58:17 by kfumiya          ###   ########.fr       */
+/*   Created: 2022/05/24 09:54:30 by kfumiya           #+#    #+#             */
+/*   Updated: 2022/05/24 10:02:05 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "cub3d.h"
 
-size_t	ft_strlen(const char *s)
+void
+	set_free(void **dst, void *src)
 {
-	size_t	i;
+	free(*dst);
+	*dst = src;
+}
 
-	i = 0;
-	if (!s)
-		return (i);
-	while (s[i] != '\0')
-		i++;
-	return (i);
+void
+	instant_free(void **strs)
+{
+	int	i;
+
+	i = -1;
+	while (strs[++i])
+		set_free((void **)&strs[i], NULL);
+	set_free((void **)&strs, NULL);
 }

@@ -6,7 +6,7 @@
 #    By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/11 20:03:14 by kfumiya           #+#    #+#              #
-#    Updated: 2022/05/23 20:34:22 by kfumiya          ###   ########.fr        #
+#    Updated: 2022/05/25 10:53:22 by kfumiya          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,14 @@ SRCS	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/errors.c \
 			$(SRCDIR)/game.c \
 			$(SRCDIR)/read_cub.c \
+			$(SRCDIR)/set_resolution.c \
+			$(SRCDIR)/set_color.c \
+			$(SRCDIR)/read_texture.c \
+			$(SRCDIR)/read_map.c \
+			$(SRCDIR)/set_free.c \
+			$(SRCDIR)/utils.c \
+			$(SRCDIR)/readline.c \
+			# $(SRCDIR)/mlx_utils.c \
 					# test.c \
 					# gnl/get_next_line.c gnl/get_next_line_utils.c \
 					# utils/pos.c utils/ft_endwith.c utils/ft_in_set.c \
@@ -34,12 +42,14 @@ SRCS	:=	$(SRCDIR)/main.c \
 					# draw.c raycast.c draw_wall.c draw_ceiling_floor.c \
 					# cub3d.c
 					# tables.c
+SRCS	+=	$(SRCDIR)/debug.c \
 
 OBJS		:= $(addprefix $(OBJDIR)/, $(notdir $(SRCS:%.c=%.o)))
 
 CC			:= cc
 CFLAGS		:= -Wall -Wextra -Werror
-INCLUDES	:= -I mlx libft
+# INCLUDES	:= -I mlx libft
+INCLUDES	:= -I mlx_linux libft
 
 LIBFT		:= libft/libft.a
 MLX_LIB		:= mlx_linux/libmlx.a
@@ -54,24 +64,25 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 $(NAME): $(OBJS)
 	@make -C libft
 	# @make -C mlx
-	@make -C mlx_linux
+	# @make -C mlx_linux
 	# cp $(MLX_LIB) libmlx.dylib
-	cp $(MLX_LIB) libmlx.a
+	# cp $(MLX_LIB) libmlx.a
 	# $(CC) $(CFLAGS) -g $^ -o $@ -Llib -llib -Lmlx -lmlx -framework OpenGL -framework AppKit
-	$(CC) $(CFLAGS) -g $^ -o $@ $(LIBFT) $(MLX_LIB)
+	$(CC) $(CFLAGS) -g $^ -o $@ $(LIBFT)
+	# $(CC) $(CFLAGS) -g $^ -o $@ $(LIBFT) $(MLX_LIB)
 
 all: $(NAME)
 
 clean:
 	$(RM) $(OBJDIR)
 	@make -C libft clean
-	@make -C mlx_linux clean
+	# @make -C mlx_linux clean
 	# @make -C mlx clean
 
 fclean: clean
 	@make -C libft fclean
-	rm -f $(NAME)
-	$(RM) libmlx.a
+	$(RM) $(NAME)
+	# $(RM) libmlx.a
 	# $(RM) libmlx.dylib
 	# $(RM) screenshot.bmp
 
