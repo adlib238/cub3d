@@ -6,23 +6,11 @@
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 21:30:12 by kfumiya           #+#    #+#             */
-/*   Updated: 2022/05/24 13:08:03 by kfumiya          ###   ########.fr       */
+/*   Updated: 2022/05/27 10:10:15 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// int
-// 	exit_game(t_game *game, int code)
-// {
-// 	clear_config(&game->config);
-// 	clear_window(&game->window);
-// 	clear_textures(game);
-// 	clear_sprites(&game->sprites);
-// 	free(&game->buf);
-// 	exit(code);
-// 	return (code);
-// }
 
 int
 	init_game(t_game *game)
@@ -41,67 +29,54 @@ int
 	game->tex_s.img = NULL;
 	game->tex_w.img = NULL;
 	game->tex_e.img = NULL;
-	// game->tex_width = 0;
-	// game->tex_height = 0;
+	game->tex_width = 0;
+	game->tex_height = 0;
 	game->sky_color = UINT32_MAX;
 	game->ground_color = UINT32_MAX;
-	game->height_base = 0;
+	game->horizon = 0;
 	return (0);
 }
 
-// static int
-// 	buf_malloc(t_game *game)
-// {
-// 	t_window *win;
-// 	int i;
-// 	int	j;
-// 	int	**buf;
+void
+	set_screen(t_game *game, int save)
+{
+	double	plane_length;
+	int		max_w;
+	int		max_h;
 
-// 	win = &game->window;
-// 	if (!(buf = (int **)malloc(sizeof(int *) * win->size.y)))
-// 		return (0);
-// 	i = 0;
-// 	while (i < win->size.y)
-// 	{
-// 		if (!(buf[i] = malloc(sizeof(int) * win->size.x)))
-// 			return (0);
-// 		j = 0;
-// 		while (j < win->size.x)
-// 		{
-// 			buf[i][j] = 0;
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	// printf("buf_width: %d\nbuf_height: %d\n", i, j);
-// 	game->buf = buf;
-// 	return (1);
-// }
+	// mlx_get_screen_sizeが有効になったらmax_w, max_hの初期化は消す
+	max_w = 200;
+	max_h = 200;
+	// mlx_get_screen_size(game->mlx, &max_w, &max_h);
+	// printf("Display size\n\twidth: %d\n\theight: %d\n", max_w, max_h);
+	if (!save)
+	{
+		game->screen_width = MIN(game->screen_width, max_w);
+		game->screen_height = MIN(game->screen_height, max_h);
+		// game->win = mlx_new_window(game->mlx, game->screen_width,
+		// 	game->screen_height, "cub3D");
+	}
+	// game->img.img = mlx_new_image(game->mlx, game->screen_width,
+	// 	game->screen_height);
+	// game->img.addr = mlx_get_data_addr(game->img.img,
+	// 	&game->img.bits_per_pixel, &game->img.line_length, &game->img.endian);
+	game->img.width = game->screen_width;
+	game->img.height = game->screen_height;
+	game->tex_width = game->tex_n.width;
+	game->tex_height = game->tex_n.height;
+	plane_length = vec_length(game->player.plane);
+	game->horizon = (double)game->screen_width * (1 / (2 * plane_length));
+	// mlx_do_key_autorepeaton(game->mlx);
+}
 
-// int
-// 	start_game(t_game *game)
-// {
-// 	if (!init_window(&game->window, &game->config))
-// 		return (put_error("Error:\nmlx failed to create window or image.\n",
-// 							game));
-// 	// set_start_pos(&game->config, &game->camera);
-// 	// set_start_angle(&game->config, &game->camera);
-// 	if (!load_textures(game))
-// 		return (put_error("Error:\nfailed to load textures.\n", game));
-// 	if (!buf_malloc(game))
-// 		return (put_error("Error:\nbuf malloc miss.", game));
-// 	set_pos(&game->pos, game->config.pl_x, game->config.pl_y);
-// 	// make_tables(game);
-// 	return (1);
-// }
-
-// int
-// 	screenshot(t_game *game)
-// {
-// 	update_screen(game);
-// 	return (exit_game(game, EXIT_SUCCESS));
-// 	// update_window(game);
-// 	// if (!save_bmp(game))
-// 	// 	put_error("Error:\nFailed to save screenshot.");
-// 	return (exit_game(game, EXIT_SUCCESS));
-// }
+int
+	main_loop(t_game *game)
+{
+	reset_img(&game->img);
+	draw_walls(game);
+	// draw_minimap(game);
+	// update_player(game);
+	// print_game(game);
+	// mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
+	return (0);
+}
