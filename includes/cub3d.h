@@ -6,7 +6,7 @@
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 18:25:53 by kfumiya           #+#    #+#             */
-/*   Updated: 2022/05/27 11:06:47 by kfumiya          ###   ########.fr       */
+/*   Updated: 2022/05/29 09:39:45 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,19 +95,19 @@ typedef struct	s_img {
 typedef struct	s_vec {
 	double		x;
 	double		y;
-} t_vec;
+} t_vec2;
 
 // Ray 2D
 typedef struct	s_ray2 {
-	t_vec		pos;  // レイの始点の位置ベクトル
-	t_vec		way;  // レイの始点から伸びる方向ベクトル
+	t_vec2		pos;  // レイの始点の位置ベクトル
+	t_vec2		way;  // レイの始点から伸びる方向ベクトル
 } t_ray2;
 
 // Player
 typedef struct	s_player {
-	t_vec		pos;  // 現在位置(px)[x, y]
-	t_vec		dir;       // 現在向いている方向のベクトル
-	t_vec		plane;     // 2Dレイキャスティング用のカメラ平面
+	t_vec2		pos;  // 現在位置(px)[x, y]
+	t_vec2		dir;       // 現在向いている方向のベクトル
+	t_vec2		plane;     // 2Dレイキャスティング用のカメラ平面
 	int			is_moving; // 動くキーが押されているか (W=1, S=-1, None=0)
 	int			is_sidling;  // 動くキーが押されているか (D=1, A=-1, None=0)
 	int			is_rotating; // 動くキーが押されているか (左矢印=1, 右矢印=-1, None=0)
@@ -141,7 +141,7 @@ typedef struct	s_ray {
 	// カメラ平面上のx座標 (3D表示時の画面のx座標)  -1.0~1.0
 	double		camera_x;
 	// 光線ベクトル
-	t_vec		dir;
+	t_vec2		dir;
 	// map: 現在対象としているマップ内の正方形を表す
 	int			map_x;
 	int			map_y;
@@ -222,9 +222,9 @@ void draw_walls(t_game *game);
 /* update_player.c */
 void update_player(t_game *game);
 /* vector.c */
-double vec_length(t_vec vec);
+double vec_length(t_vec2 vec);
 double deg_rad(int x);
-void vec_rotate(t_vec *vec, double rad);
+void vec_rotate(t_vec2 *vec, double rad);
 /* wall_utils.c */
 void set_texture(t_game *game, t_ray *ray);
 /* set_free.c */

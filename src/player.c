@@ -6,7 +6,7 @@
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:09:22 by kfumiya           #+#    #+#             */
-/*   Updated: 2022/05/27 09:55:32 by kfumiya          ###   ########.fr       */
+/*   Updated: 2022/05/29 09:40:21 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void
 {
 	double	new_x;
 	double	new_y;
-	t_vec	perpendicular;
+	t_vec2	perpendicular;
 
 	if (game->player.is_sidling)
 	{

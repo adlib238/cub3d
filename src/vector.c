@@ -6,14 +6,14 @@
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:01:45 by kfumiya           #+#    #+#             */
-/*   Updated: 2022/05/27 10:42:48 by kfumiya          ###   ########.fr       */
+/*   Updated: 2022/05/29 09:39:40 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 double
-	vec_length(t_vec vec)
+	vec_length(t_vec2 vec)
 {
 	return (sqrt(vec.x * vec.x + vec.y * vec.y));
 }
@@ -25,9 +25,9 @@ double
 }
 
 void
-	vec_rotate(t_vec *vec, double rad)
+	vec_rotate(t_vec2 *vec, double rad)
 {
-	t_vec	old_vec;
+	t_vec2	old_vec;
 
 	old_vec = *vec;
 	vec->x = old_vec.x * cos(rad) + old_vec.y * sin(rad);
