@@ -6,7 +6,7 @@
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 21:30:12 by kfumiya           #+#    #+#             */
-/*   Updated: 2022/05/27 10:10:15 by kfumiya          ###   ########.fr       */
+/*   Updated: 2022/05/31 11:52:00 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ void
 	game->img.height = game->screen_height;
 	game->tex_width = game->tex_n.width;
 	game->tex_height = game->tex_n.height;
-	plane_length = vec_length(game->player.plane);
+	// planeベクトルの大きさを求める
+	plane_length = vec2_length(game->player.plane);
+	// 基準となる高さ、視野角に応じて横幅が変わってしますので、視野角の逆数をかけて１に戻す
 	game->horizon = (double)game->screen_width * (1 / (2 * plane_length));
 	// mlx_do_key_autorepeaton(game->mlx);
 }
