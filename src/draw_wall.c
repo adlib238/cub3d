@@ -6,7 +6,7 @@
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:36:23 by kfumiya           #+#    #+#             */
-/*   Updated: 2022/05/31 11:48:13 by kfumiya          ###   ########.fr       */
+/*   Updated: 2022/05/31 14:33:01 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void
 	ray->map_x = (int)game->player.pos.x;
 	ray->map_y = (int)game->player.pos.y;
 	// delta_distは光線が今の正方形から次の正方形に行くために移動する距離
+	// 今回は比率だけ必要なため、簡略化した形でも大丈夫
 	ray->delta_dist_x = fabs(1 / ray->dir.x);
 	ray->delta_dist_y = fabs(1 / ray->dir.y);
 	// stepとside_distを求める
@@ -32,6 +33,7 @@ void
 	ray->step_y = 1;
 	ray->side_dist_y = (ray->map_y + 1.0 - game->player.pos.y)
 		* ray->delta_dist_y;
+	// 光線ベクトルが負の場合
 	if (ray->dir.x < 0)
 	{
 		ray->step_x = -1;
