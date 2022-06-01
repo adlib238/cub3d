@@ -6,7 +6,7 @@
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:09:34 by kfumiya           #+#    #+#             */
-/*   Updated: 2022/05/25 10:20:14 by kfumiya          ###   ########.fr       */
+/*   Updated: 2022/06/01 13:27:00 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ bool
 static bool
 	check_tex_set(t_game *game, char *s)
 {
-	if (ft_strcmp(s, "NO") && game->tex_n.img)
+	if (!ft_strcmp(s, "NO") && game->tex_n.img)
 		return (true);
-	else if (ft_strcmp(s, "SO") && game->tex_s.img)
+	else if (!ft_strcmp(s, "SO") && game->tex_s.img)
 		return (true);
-	else if (ft_strcmp(s, "WE") && game->tex_w.img)
+	else if (!ft_strcmp(s, "WE") && game->tex_w.img)
 		return (true);
-	else if (ft_strcmp(s, "EA") && game->tex_e.img)
+	else if (!ft_strcmp(s, "EA") && game->tex_e.img)
 		return (true);
 	return (false);
 }
@@ -54,13 +54,13 @@ int
 	tex = NULL;
 	if (check_tex_set(game, s))
 		return (return_error_msg("The direction texture is already set"));
-	if (ft_strcmp(s, "NO"))
+	if (!ft_strcmp(s, "NO"))
 		tex = &game->tex_n;
-	else if (ft_strcmp(s, "SO"))
+	else if (!ft_strcmp(s, "SO"))
 		tex = &game->tex_s;
-	else if (ft_strcmp(s, "WE"))
+	else if (!ft_strcmp(s, "WE"))
 		tex = &game->tex_w;
-	else if (ft_strcmp(s, "EA"))
+	else if (!ft_strcmp(s, "EA"))
 		tex = &game->tex_e;
 	samp(tex);
 	// if (read_image(game, tex, path) == ERROR)

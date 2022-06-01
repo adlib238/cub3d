@@ -6,7 +6,7 @@
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:45:34 by kfumiya           #+#    #+#             */
-/*   Updated: 2022/05/26 15:11:40 by kfumiya          ###   ########.fr       */
+/*   Updated: 2022/06/01 13:30:33 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,16 @@ static int
 	int	j;
 
 	i = -1;
-	j = -1;
 	while (++i < game->map_row)
 	{
+		j = -1;
 		while (++j < game->map_col)
 		{
 			if (game->map[i][j] == '\0')
 				continue ;
 			if (!ft_in_set(game->map[i][j], " 01NSWE"))
 				return (return_error_msg("Map has invalid characters"));
-			if (ft_in_set(game->map[i][j], "NSWE"))
+			if (!ft_in_set(game->map[i][j], "NSWE"))
 			{
 				if (game->player.pos.x != ERROR && game->player.pos.y != ERROR)
 					return (return_error_msg("Player must be alone"));
@@ -97,7 +97,7 @@ int
 	if (fd == ERROR)
 		return (return_error_msg("The file could not be opened"));
 	status = read_config(game, fd);
-	if (status == ERROR || get_player_pos(game) || check_map(game))
+	if (status == ERROR || get_player_pos(game) || !check_map(game))
 		return (return_error_msg("cub file settings are incorrect"));
 	print_config(game);
 	return (0);

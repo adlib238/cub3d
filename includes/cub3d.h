@@ -6,7 +6,7 @@
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 18:25:53 by kfumiya           #+#    #+#             */
-/*   Updated: 2022/05/29 09:39:45 by kfumiya          ###   ########.fr       */
+/*   Updated: 2022/06/01 13:29:01 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ void put_err_msg(char *msg);
 /* game.c */
 int init_game(t_game *game);
 void set_screen(t_game *game, int save);
+int main_loop(t_game *game);
 /* read_cub.c */
 int read_cub(t_game *game, char *path);
 /* set_free.c */
