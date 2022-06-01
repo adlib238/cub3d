@@ -6,7 +6,7 @@
 #    By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/11 20:03:14 by kfumiya           #+#    #+#              #
-#    Updated: 2022/05/25 10:53:22 by kfumiya          ###   ########.fr        #
+#    Updated: 2022/05/27 11:06:06 by kfumiya          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,16 @@ SRCS	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/set_free.c \
 			$(SRCDIR)/utils.c \
 			$(SRCDIR)/readline.c \
+			$(SRCDIR)/check_map.c \
+			$(SRCDIR)/draw_wall.c \
+			$(SRCDIR)/debug.c \
+			$(SRCDIR)/player.c \
+			$(SRCDIR)/vector.c \
+			$(SRCDIR)/wall_utils.c \
+			$(SRCDIR)/set_free.c \
+			$(SRCDIR)/draw.c \
+			$(SRCDIR)/init_player.c \
+			# $(SRCDIR)/hooks.c \
 			# $(SRCDIR)/mlx_utils.c \
 					# test.c \
 					# gnl/get_next_line.c gnl/get_next_line_utils.c \

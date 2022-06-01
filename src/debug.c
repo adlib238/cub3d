@@ -6,7 +6,7 @@
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 10:50:06 by kfumiya           #+#    #+#             */
-/*   Updated: 2022/05/25 10:56:53 by kfumiya          ###   ########.fr       */
+/*   Updated: 2022/05/26 14:38:49 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,24 @@ void
 	printf("tex_s.img: %p\n", game->tex_s.img);
 	printf("tex_w.img: %p\n", game->tex_w.img);
 	printf("tex_e.img: %p\n", game->tex_e.img);
-	printf("\n---INPUT MAP------------------------\n");
+	printf("\n--- map ------------------------\n");
 	for (int i = 0; i < game->map_row; i++)
 		printf("%s\n", game->map[i]);
 	printf("==============================================\n");
+}
+
+void
+	print_game(t_game *game)
+{
+	printf("\n=== game =========================================\n");
+	printf("player\n");
+	printf("pos\n\tx: %lf\n\ty: %lf\n", \
+			game->player.pos.x, game->player.pos.y);
+	printf("dir\n\tx: %lf\n\ty: %lf\n", \
+			game->player.dir.x, game->player.dir.y);
+	printf("plane\n\tx: %lf\n\ty: %lf\n", \
+			game->player.plane.x, game->player.plane.y);
+	printf("status\n\tis_moving: %d\n\tis_rotating: %d\n", \
+			game->player.is_moving, game->player.is_rotating);
+	printf("\n====================================================\n");
 }
