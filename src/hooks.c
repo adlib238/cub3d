@@ -6,7 +6,7 @@
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 10:46:15 by kfumiya           #+#    #+#             */
-/*   Updated: 2022/05/27 11:06:27 by kfumiya          ###   ########.fr       */
+/*   Updated: 2022/06/02 13:02:07 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int
 	close_window(t_game *game)
 {
-	// mlx_destroy_window(game->mlx, game->win);
+	mlx_destroy_window(game->mlx, game->win);
 	exit(0);
 }
 
@@ -24,7 +24,7 @@ int
 {
 	if (keycode == KEY_ESC || keycode == KEY_Q)
 	{
-		// mlx_destroy_window(game->mlx, game->win);
+		mlx_destroy_window(game->mlx, game->win);
 		exit(0);
 	}
 	if (keycode == KEY_W)

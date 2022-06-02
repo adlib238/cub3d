@@ -6,7 +6,7 @@
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:35:07 by kfumiya           #+#    #+#             */
-/*   Updated: 2022/05/25 10:53:50 by kfumiya          ###   ########.fr       */
+/*   Updated: 2022/06/02 13:03:24 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 static bool
 	check_config_set(t_game *game)
 {
-	/* 
 	if (game->screen_height == -1 || game->screen_width == -1
 		|| game->sky_color == UINT32_MAX || game->ground_color == UINT32_MAX
 		|| !game->tex_n.img || !game->tex_s.img || !game->tex_w.img
 		|| !game->tex_e.img)
- */
-	if (game->screen_height == -1 || game->screen_width == -1
-		|| game->sky_color == UINT32_MAX || game->ground_color == UINT32_MAX)
 		return (false);
 	return (true);
+	/* 
+	if (game->screen_height == -1 || game->screen_width == -1
+		|| game->sky_color == UINT32_MAX || game->ground_color == UINT32_MAX)
+ */
 }
 
 int

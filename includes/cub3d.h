@@ -6,7 +6,7 @@
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 18:25:53 by kfumiya           #+#    #+#             */
-/*   Updated: 2022/05/29 09:39:45 by kfumiya          ###   ########.fr       */
+/*   Updated: 2022/06/02 13:06:08 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 # include <math.h>
 # include <stdbool.h>
 # include "../libft/includes/libft.h"
+# include "../mlx_linux/mlx.h"
+# include "../mlx_linux/mlx_new_window.h"
+# include "../mlx_linux/mlx_opengl.h"
+# include "../mlx_linux/mlx_png.h"
 // # include "../mlx/mlx.h"
 
 # define MAX(a, b)	((a > b) ? a : b)
@@ -192,6 +196,7 @@ void put_err_msg(char *msg);
 /* game.c */
 int init_game(t_game *game);
 void set_screen(t_game *game, int save);
+int main_loop(t_game *game);
 /* read_cub.c */
 int read_cub(t_game *game, char *path);
 /* set_free.c */
@@ -236,14 +241,14 @@ void reset_img(t_img *img);
 void init_player(t_player *player, double x, double y, char dir);
 
 
-// /* hooks.c */
-// int close_window(t_game *game);
-// int key_press(int keycode, t_game *game);
-// int key_release(int keycode, t_game *game);
-// /* mlx_utils.c */
-// int read_image(t_game *game, t_img *img, char *filepath);
-// void my_mlx_pixel_put(t_img *img, int x, int y, int color);
-// uint32_t get_color(t_img img, int x, int y);
+/* hooks.c */
+int close_window(t_game *game);
+int key_press(int keycode, t_game *game);
+int key_release(int keycode, t_game *game);
+/* mlx_utils.c */
+int read_image(t_game *game, t_img *img, char *filepath);
+void my_mlx_pixel_put(t_img *img, int x, int y, int color);
+uint32_t get_color(t_img img, int x, int y);
 
 
 
