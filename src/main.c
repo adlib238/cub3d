@@ -6,7 +6,7 @@
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/11 18:22:25 by kfumiya           #+#    #+#             */
-/*   Updated: 2022/05/27 10:45:26 by kfumiya          ###   ########.fr       */
+/*   Updated: 2022/06/02 13:02:49 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int
 		exit(EXIT_FAILURE);
 	}
 	set_screen(&game, save);
-	// mlx_hook(game.win, 2, 1L << 0, &key_press, &game);
-	// mlx_hook(game.win, 3, 1L << 1, &key_release, &game);
-	// mlx_hook(game.win, 17, 0, &close_window, &game);
-	// mlx_loop_hook(game.mlx, &main_loop, &game);
-	// mlx_loop(game.mlx);
+	mlx_hook(game.win, &key_press, &game);
+	mlx_hook(game.win, &key_release, &game);
+	mlx_hook(game.win, &close_window, &game);
+	mlx_loop_hook(game.mlx, &main_loop, &game);
+	mlx_loop(game.mlx);
 	return (EXIT_SUCCESS);
 }

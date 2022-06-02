@@ -6,7 +6,7 @@
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:36:23 by kfumiya           #+#    #+#             */
-/*   Updated: 2022/05/31 14:33:01 by kfumiya          ###   ########.fr       */
+/*   Updated: 2022/06/02 13:01:04 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,19 +112,19 @@ void
 	int			y;
 
 	// get_colorを有効にした時color = 0, x++, x--を削除;
-	color = 0;
-	x++;
-	x--;
+	// color = 0;
+	// x++;
+	// x--;
 	// テクスチャの現在のy座標
 	wall->texture_y = (wall->draw_start - game->screen_height / 2 \
 			+ wall->line_height / 2) * wall->step;
 	y = 0;
 	while (y < game->screen_height)
 	{
-		// if (y <= game->screen_height / 2)
-		// 	my_mlx_pixel_put(&game->img, x, y, game->sky_color);
-		// else
-		// 	my_mlx_pixel_put(&game->img, x, y, game->ground_color);
+		if (y <= game->screen_height / 2)
+			my_mlx_pixel_put(&game->img, x, y, game->sky_color);
+		else
+			my_mlx_pixel_put(&game->img, x, y, game->ground_color);
 		// テクスチャの現在の座標（double型）を整数型に変換
 		// （TEXTURE_HEGHT - 1）とのANDによりテクスチャ座標がテクスチャの高さを超えないようにしている
 		if (y >= wall->draw_start && y < wall->draw_end)
@@ -133,11 +133,11 @@ void
 			if (wall->texture_y >= ray.tex->height)
 				wall->texture_y = ray.tex->height - 1;
 			wall->texture_pos_y += wall->step;
-			// color = get_color(*ray.tex, wall->texture_x, wall->texture_y);
+			color = get_color(*ray.tex, wall->texture_x, wall->texture_y);
 			// 正方形のyめんにヒットしていた場合はRGBのそれぞれを1/2にすることで暗くする
 			if (ray.side == 1)
 				color = (color >> 1) & 0x7f7f7f;
-			// my_mlx_pixel_put(&game->img, x, y, color);
+			my_mlx_pixel_put(&game->img, x, y, color);
 		}
 		y++;
 	}

@@ -6,7 +6,7 @@
 #    By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/11 20:03:14 by kfumiya           #+#    #+#              #
-#    Updated: 2022/05/27 11:06:06 by kfumiya          ###   ########.fr        #
+#    Updated: 2022/06/02 13:00:15 by kfumiya          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,8 @@ SRCS	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/set_free.c \
 			$(SRCDIR)/draw.c \
 			$(SRCDIR)/init_player.c \
-			# $(SRCDIR)/hooks.c \
-			# $(SRCDIR)/mlx_utils.c \
+			$(SRCDIR)/hooks.c \
+			$(SRCDIR)/mlx_utils.c \
 					# test.c \
 					# gnl/get_next_line.c gnl/get_next_line_utils.c \
 					# utils/pos.c utils/ft_endwith.c utils/ft_in_set.c \
@@ -74,25 +74,25 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 $(NAME): $(OBJS)
 	@make -C libft
 	# @make -C mlx
-	# @make -C mlx_linux
+	@make -C mlx_linux
 	# cp $(MLX_LIB) libmlx.dylib
-	# cp $(MLX_LIB) libmlx.a
+	cp $(MLX_LIB) libmlx.a
 	# $(CC) $(CFLAGS) -g $^ -o $@ -Llib -llib -Lmlx -lmlx -framework OpenGL -framework AppKit
-	$(CC) $(CFLAGS) -g $^ -o $@ $(LIBFT)
-	# $(CC) $(CFLAGS) -g $^ -o $@ $(LIBFT) $(MLX_LIB)
+	# $(CC) $(CFLAGS) -g $^ -o $@ $(LIBFT)
+	$(CC) $(CFLAGS) -g $^ -o $@ $(LIBFT) $(MLX_LIB)
 
 all: $(NAME)
 
 clean:
 	$(RM) $(OBJDIR)
 	@make -C libft clean
-	# @make -C mlx_linux clean
+	@make -C mlx_linux clean
 	# @make -C mlx clean
 
 fclean: clean
 	@make -C libft fclean
 	$(RM) $(NAME)
-	# $(RM) libmlx.a
+	$(RM) libmlx.a
 	# $(RM) libmlx.dylib
 	# $(RM) screenshot.bmp
 

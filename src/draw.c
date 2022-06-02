@@ -6,7 +6,7 @@
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:31:04 by kfumiya           #+#    #+#             */
-/*   Updated: 2022/05/27 10:10:47 by kfumiya          ###   ########.fr       */
+/*   Updated: 2022/06/02 13:00:31 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void
 		y = 0;
 		while (y < img->height)
 		{
-			// my_mlx_pixel_put(img, x, y, 0xff000000);
+			my_mlx_pixel_put(img, x, y, 0xff000000);
 			y++;
 		}
 		x++;

@@ -6,7 +6,7 @@
 /*   By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 12:09:34 by kfumiya           #+#    #+#             */
-/*   Updated: 2022/06/01 13:27:00 by kfumiya          ###   ########.fr       */
+/*   Updated: 2022/06/02 13:03:34 by kfumiya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int
 	else if (!ft_strcmp(s, "EA"))
 		tex = &game->tex_e;
 	samp(tex);
-	// if (read_image(game, tex, path) == ERROR)
-	// 	return (return_error_msg("Failed to read texture"));
+	if (read_image(game, tex, path) == ERROR)
+		return (return_error_msg("Failed to read texture"));
 	return (0);
 }
