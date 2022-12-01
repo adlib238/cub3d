@@ -1,104 +1,61 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: kfumiya <kfumiya@student.42tokyo.jp>       +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/04/11 20:03:14 by kfumiya           #+#    #+#              #
-#    Updated: 2022/06/02 13:00:15 by kfumiya          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME			= cub3D
+CC				= cc
+INCLUDES		= -I./includes
+CFLAGS			= -Wall -Werror -Wextra -MMD -MP $(INCLUDES)
 
-NAME	:= cub3D
+SRC_DIR			= srcs/
+SRC_FILE		:= main.c validation.c init.c \
+					parse_cubfile.c parse_colors.c parse_textures.c parse_map.c \
+					utils.c get_next_line.c free.c exit.c \
+					draw_wall.c	error.c game.c init_player.c mlx_utils.c \
+					vector.c wall_utils.c player.c hooks.c math_utils.c
+SRC				= $(addprefix $(SRC_DIR), $(SRC_FILE))
 
-SRCDIR	:= ./src
-OBJDIR	:= ./obj
+OBJ_DIR			= obj/
+OBJ				= $(addprefix $(OBJ_DIR), $(SRC_FILE:%.c=%.o))
+DEPEND			= $(OBJ:%.o=%.d)
 
-SRCS	:=	$(SRCDIR)/main.c \
-			$(SRCDIR)/errors.c \
-			$(SRCDIR)/game.c \
-			$(SRCDIR)/read_cub.c \
-			$(SRCDIR)/set_resolution.c \
-			$(SRCDIR)/set_color.c \
-			$(SRCDIR)/read_texture.c \
-			$(SRCDIR)/read_map.c \
-			$(SRCDIR)/set_free.c \
-			$(SRCDIR)/utils.c \
-			$(SRCDIR)/readline.c \
-			$(SRCDIR)/check_map.c \
-			$(SRCDIR)/draw_wall.c \
-			$(SRCDIR)/debug.c \
-			$(SRCDIR)/player.c \
-			$(SRCDIR)/vector.c \
-			$(SRCDIR)/wall_utils.c \
-			$(SRCDIR)/set_free.c \
-			$(SRCDIR)/draw.c \
-			$(SRCDIR)/init_player.c \
-			$(SRCDIR)/hooks.c \
-			$(SRCDIR)/mlx_utils.c \
-					# test.c \
-					# gnl/get_next_line.c gnl/get_next_line_utils.c \
-					# utils/pos.c utils/ft_endwith.c utils/ft_in_set.c \
-					# utils/str.c utils/ft_atoi.c utils/ft_itoa.c\
-					# utils/ft_split.c utils/ft_strcmp.c \
-					# utils/ft_strdup.c utils/ft_substr.c \
-					# utils/ft_write.c \
-					# game.c errors.c clear.c \
-					# parse_params.c parse_textures.c parse_map.c check_map.c \
-					# parse_sprites.c parse_config.c \
-					# window.c texture.c color.c sprite.c
-					# camera.c tables.c screen.c \
-					# draw.c raycast.c draw_wall.c draw_ceiling_floor.c \
-					# cub3d.c
-					# tables.c
-SRCS	+=	$(SRCDIR)/debug.c \
+LIBFT_DIR		= libft/
+LIBFT_NAME		= libft.a
 
-OBJS		:= $(addprefix $(OBJDIR)/, $(notdir $(SRCS:%.c=%.o)))
+UNAME			= $(shell uname)
+ifeq ($(UNAME), Darwin)
+	MLXFLAG = -L/usr/X11R6/lib -lX11 -lXext -framework OpenGL -framework AppKit
+else
+	ifeq ($(UNAME), Linux)
+		MLXFLAG = -Imlx -lXext -lX11 -lm
+	endif
+endif
+MLX_DIR		= mlx/
+MLX_NAME	= libmlx_$(UNAME).a
 
-CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror
-# INCLUDES	:= -I mlx libft
-INCLUDES	:= -I mlx_linux libft
-
-LIBFT		:= libft/libft.a
-MLX_LIB		:= mlx_linux/libmlx.a
-# MLX_LIB		:= mlx/libmlx.dylib
-
-RM			:= rm -rf
-
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@if [ ! -d $(OBJDIR) ]; then echo "mkdir -p $(OBJDIR)" && mkdir -p $(OBJDIR); fi
-	$(CC) $(CFLAGS) -o $@ -c $< -Iincludes
-
-$(NAME): $(OBJS)
-	@make -C libft
-	# @make -C mlx
-	@make -C mlx_linux
-	# cp $(MLX_LIB) libmlx.dylib
-	cp $(MLX_LIB) libmlx.a
-	# $(CC) $(CFLAGS) -g $^ -o $@ -Llib -llib -Lmlx -lmlx -framework OpenGL -framework AppKit
-	# $(CC) $(CFLAGS) -g $^ -o $@ $(LIBFT)
-	$(CC) $(CFLAGS) -g $^ -o $@ $(LIBFT) $(MLX_LIB)
+LIBFT			= $(LIBFT_DIR)$(LIBFT_NAME)
+LIBMLX			= $(MLX_DIR)$(MLX_NAME)
+LIBS			= $(LIBFT) $(LIBMLX)
 
 all: $(NAME)
 
+$(NAME): $(OBJ) $(LIBS)
+	$(CC) $(CFLAGS) -o $@ $^ $(MLXFLAG)
+
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	make -C $(MLX_DIR)
+	make -C $(LIBFT_DIR)
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -o $@ -c $<
+
 clean:
-	$(RM) $(OBJDIR)
-	@make -C libft clean
-	@make -C mlx_linux clean
-	# @make -C mlx clean
+	make clean -C $(MLX_DIR)
+	make clean -C $(LIBFT_DIR)
+	@if [ -d $(OBJ_DIR) ]; then rm -r $(OBJ_DIR) ; fi
 
 fclean: clean
-	@make -C libft fclean
-	$(RM) $(NAME)
-	$(RM) libmlx.a
-	# $(RM) libmlx.dylib
-	# $(RM) screenshot.bmp
+	make fclean -C $(LIBFT_DIR)
+	rm -f $(NAME)
 
 re: fclean all
 
-run: all
-	@./cub3D test.cub
+bonus: all
 
-.PHONY:	all clean fclean re run
+-include $(DEPEND)
+.PHONY: all clean fclean re bonus
